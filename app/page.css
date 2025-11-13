@@ -1,0 +1,368 @@
+@font-face {
+  font-family: "BrickPixel";
+  src: url("/fonts/BrickPixel.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "StoneSlab";
+  src: url("/fonts/StoneSlab.ttf") format("truetype");
+}
+@font-face {
+  font-family: "GameTape";
+  src: url("/fonts/Game_Tape.ttf") format("truetype");
+}
+
+/* .model1{
+    display: none;
+}
+.model3{
+    display: none;
+} */
+.marquee {
+  position: absolute;
+  height: 40vh;
+  top: -5%;
+  width: 100%;
+  z-index: 4;
+  margin-top: 100px;
+}
+
+.cloudLeft {
+  padding-left: 20px;
+}
+.cloudRight {
+  padding-left: 100px;
+}
+.marquee1 {
+  position: absolute;
+  /* height: fit-content; */
+  width: 100%;
+  z-index: 40;
+  margin-top: 80px;
+}
+.marquee2 {
+  position: absolute;
+  z-index: 9;
+  height: 20vh;
+  height: fit-content;
+  width: 100%;
+  left: 0;
+  margin-top: 0px;
+}
+.left {
+  border: 2px solid #ffffff;
+  position: absolute;
+  left: 0;
+}
+.right {
+  border: 2px solid #2200ff;
+  position: absolute;
+  right: 0;
+}
+
+.maindiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+}
+.box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  top: 8%;
+}
+.logo {
+  position: absolute;
+  top: 18%;
+  z-index: 999;
+  scale: 6.5;
+  font-family: "BrickPixel";
+  color: #fe3989;
+  text-shadow: 0 0 0px #fe3989, 0 0 20px #fe3989, 0 0 30px #fe3989;
+}
+
+.model2 {
+  /* border: 2px solid green; */
+  width: 100%;
+  margin-top: 8%;
+  position: absolute;
+  /* z-index: 99; */
+}
+
+.foot {
+  width: 100%;
+  height: 25vh;
+  background-color: #fe3989;
+  position: absolute;
+  bottom: 0%;
+  z-index: -1;
+}
+.arrowLeft {
+  position: absolute;
+  left: 20%;
+  top: 50%;
+  scale: 5;
+  z-index: 999;
+}
+.arrowRight {
+  position: absolute;
+  right: 17%;
+  top: 50%;
+  scale: 5;
+  z-index: 999;
+}
+.arrowLeft h3 {
+  color: #ffebd3;
+  font-size: 7px;
+}
+.arrowLeft p {
+  /* scale: 0.2; */
+  font-size: 3px;
+  font-weight: 10;
+  color: #ffebd3;
+  opacity: 50%;
+  padding-top: 2px;
+}
+
+.arrowRight h3 {
+  color: #ffebd3;
+  font-size: 10px;
+}
+.arrowRight p {
+  /* scale: 0.2; */
+  font-size: 3px;
+  font-weight: 10;
+  color: #ffebd3;
+  opacity: 50%;
+  /* padding-top: 2px; */
+}
+.dash {
+  scale: 2;
+}
+/* .pleft{
+    margin-right: 20px;
+    fontFamily: 'GameTape';
+    padding-right:20px;
+} */
+.arrowLeft h3,
+.arrowLeft p {
+  font-family: "StoneSlab";
+}
+.btnMerch {
+  position: absolute;
+  scale: 5;
+  right: 17%;
+  top: 65%;
+
+  /* top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+  z-index: 999;
+}
+
+.merch-btn {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  position: absolute;
+  bottom: 4%;
+}
+
+.merch3d {
+  opacity: 50%;
+  padding: 0px 20px;
+}
+.activeBtn {
+  opacity: 100%;
+}
+.merch3 {
+  opacity: 50%;
+}
+.leftBtns {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  left: 5%;
+  bottom: 5%;
+}
+
+.leftTshirt {
+  padding-left: 20px;
+}
+.rightBtns {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+}
+
+.rightTshirt {
+  padding-right: 20px;
+}
+.mobile-merch {
+  display: none;
+}
+.mobile-bottom {
+  display: none;
+}
+.mobile-btn {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .box {
+    scale: 0.75;
+    position: absolute;
+    justify-self: center;
+    align-items: center;
+    left: 50%;
+    transform: translateX(-50%);
+    /* top: 40%; */
+    /* padding-top: 300px; */
+    /* width: 50%;   */
+  }
+  .logo {
+    scale: 3.4;
+  }
+  .arrowLeft {
+    scale: 4;
+  }
+  .arrowRight {
+    scale: 4;
+    padding-left: 10px;
+  }
+  .marquee {
+    position: absolute;
+    height: 20vh;
+    top: -10%;
+    /* scale: 0.9; */
+    width: 100%;
+    z-index: 4;
+    margin-top: 100px;
+  }
+  .leftTshirt,
+  .rightTshirt {
+    display: none;
+  }
+  .mobile-merch {
+    position: absolute;
+    top: 0%;
+  }
+  .btnMerch {
+    /* display: none; */
+    scale: 3.5;
+    padding-left: 10px;
+  }
+  .merch-btn {
+    scale: 0.8;
+    bottom: 7%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .arrowLeft {
+    display: none;
+  }
+  .arrowRight {
+    display: none;
+  }
+  .logo {
+    scale: 3;
+  }
+  .btnMerch {
+    display: none;
+  }
+  .merch-btn {
+    display: none;
+  }
+  .leftBtns {
+    bottom: 15%;
+  }
+  .rightBtns {
+    bottom: 15%;
+  }
+  .foot {
+    width: 100%;
+    height: 25vh;
+    background-color: #000014;
+    position: absolute;
+    bottom: 0%;
+    z-index: -1;
+  }
+  .mobile-merch {
+    display: block;
+    scale: 5.5;
+    position: absolute;
+    text-align: center;
+    top: 40%;
+  }
+  .mobile-merch h3 {
+    color: #ffebd3;
+    font-size: 7px;
+  }
+  .mobile-merch p {
+    /* scale: 0.2; */
+    font-size: 2px;
+    font-weight: 10;
+    color: #ffebd3;
+    opacity: 50%;
+    padding-top: 2px;
+  }
+
+  .box {
+    top: 27%;
+  }
+  .mobile-bottom {
+    display: block;
+    position: absolute;
+    /* bottom: 10%; */
+    bottom: 9%;
+    text-align: center;
+    scale: 5;
+  }
+  .mobile-bottom h3 {
+    color: #ffebd3;
+    font-size: 5px;
+  }
+  .dash {
+    /* scale: 1; */
+    position: absolute;
+
+    bottom: 10%;
+    /* padding-bottom: 2px; */
+  }
+  .mobile-bottom p {
+    /* scale: 0.2; */
+    font-size: 3px;
+    font-weight: 10;
+    color: #ffebd3;
+    opacity: 50%;
+    /* padding-top: 2px; */
+  }
+  .mobile-btn {
+    display: block;
+    scale: 4;
+    padding-right: 10px;
+    position: absolute;
+    bottom: 3%;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .logo {
+    scale: 2;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .logo {
+    scale: 1.8;
+  }
+}
