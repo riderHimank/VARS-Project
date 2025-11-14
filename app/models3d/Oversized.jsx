@@ -1,20 +1,14 @@
-import React, { useRef, useEffect } from 'react'
+import React from 'react'
 import { useGLTF } from '@react-three/drei'
-import * as THREE from 'three'
 
 export function Oversized(props) {
-  const { scene } = useGLTF('./Oversized.glb')
-
-  useEffect(() => {
-    if (scene) {
-      // Center the entire scene
-      const box = new THREE.Box3().setFromObject(scene)
-      const center = box.getCenter(new THREE.Vector3())
-      scene.position.sub(center)
-    }
-  }, [scene])
-
-  return <primitive object={scene} {...props} />
+  const { nodes, materials } = useGLTF('/Oversized.glb')
+  console.log(materials)
+  return (
+    <group {...props} dispose={null}>
+      <mesh geometry={nodes.Object_0004.geometry} material={materials.WOI} position={[0, -1.9, 0]} rotation={[Math.PI / 2, 0, 0]} scale={0.065} />
+    </group>
+  )
 }
 
-useGLTF.preload('./oversizedf.glb')
+useGLTF.preload('/Oversized.glb')

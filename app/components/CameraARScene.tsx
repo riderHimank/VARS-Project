@@ -90,18 +90,35 @@ export default function CameraARScene({
   const animationFrameIdRef = useRef<number | null>(null);
 
   const toggleCamera = async () => {
+    // Cancel animation frame before switching cameras
+    if (animationFrameIdRef.current) {
+      cancelAnimationFrame(animationFrameIdRef.current);
+      animationFrameIdRef.current = null;
+    }
+
     // Stop current stream
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
       streamRef.current = null;
     }
 
-    // Toggle facing mode
+    // Clear video element
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+
+    // Reset detection state
+    setPoseDetected(false);
+    lastVideoTimeRef.current = -1;
+
+    // Toggle facing mode - this will trigger the useEffect to restart camera
     const newFacingMode = facingMode === "user" ? "environment" : "user";
     setFacingMode(newFacingMode);
   };
 
   useEffect(() => {
+    let isComponentMounted = true;
+
     const initMediaPipe = async () => {
       try {
         console.log("Initializing MediaPipe...");
@@ -130,6 +147,9 @@ export default function CameraARScene({
 
     const startCamera = async () => {
       try {
+        // Check if component is still mounted
+        if (!isComponentMounted) return;
+
         // Check if getUserMedia is supported
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
           throw new Error(
@@ -146,6 +166,12 @@ export default function CameraARScene({
           audio: false,
         });
 
+        // Check again if component is still mounted after async operation
+        if (!isComponentMounted) {
+          mediaStream.getTracks().forEach((track) => track.stop());
+          return;
+        }
+
         setStream(mediaStream);
         streamRef.current = mediaStream;
 
@@ -154,7 +180,10 @@ export default function CameraARScene({
 
           // Wait for video to be ready
           videoRef.current.onloadedmetadata = () => {
-            videoRef.current?.play();
+            if (!isComponentMounted) return;
+            videoRef.current?.play().catch((err) => {
+              console.error("Error playing video:", err);
+            });
             detectPose();
           };
         }
@@ -181,12 +210,17 @@ export default function CameraARScene({
     };
 
     const detectPose = async () => {
+      // Check if component is still mounted
+      if (!isComponentMounted) return;
+
       if (
         !videoRef.current ||
         !canvasRef.current ||
         !poseLandmarkerRef.current
       ) {
-        animationFrameIdRef.current = requestAnimationFrame(detectPose);
+        if (isComponentMounted) {
+          animationFrameIdRef.current = requestAnimationFrame(detectPose);
+        }
         return;
       }
 
@@ -197,7 +231,9 @@ export default function CameraARScene({
         // Check if this is a new video frame
         const currentVideoTime = video.currentTime;
         if (currentVideoTime === lastVideoTimeRef.current) {
-          animationFrameIdRef.current = requestAnimationFrame(detectPose);
+          if (isComponentMounted) {
+            animationFrameIdRef.current = requestAnimationFrame(detectPose);
+          }
           return;
         }
         lastVideoTimeRef.current = currentVideoTime;
@@ -359,15 +395,20 @@ export default function CameraARScene({
         }
       }
 
-      animationFrameIdRef.current = requestAnimationFrame(detectPose);
+      if (isComponentMounted) {
+        animationFrameIdRef.current = requestAnimationFrame(detectPose);
+      }
     };
 
     initMediaPipe();
     startCamera();
 
-    // Cleanup function - stops camera when component unmounts
+    // Cleanup function - stops camera when component unmounts or facingMode changes
     return () => {
       console.log("Cleaning up camera and pose detection...");
+
+      // Mark component as unmounted
+      isComponentMounted = false;
 
       // Cancel animation frame first
       if (animationFrameIdRef.current) {
@@ -387,6 +428,7 @@ export default function CameraARScene({
       // Clear video source
       if (videoRef.current) {
         videoRef.current.srcObject = null;
+        videoRef.current.onloadedmetadata = null;
       }
 
       // Reset refs
@@ -395,7 +437,6 @@ export default function CameraARScene({
       // Clear state
       setStream(null);
       setPoseDetected(false);
-      setError("");
     };
   }, [facingMode]);
 

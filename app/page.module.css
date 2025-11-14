@@ -1,15 +1,15 @@
 @font-face {
   font-family: "BrickPixel";
-  src: url("/fonts/BrickPixel.ttf") format("truetype");
+  src: url("/Brick_Pixel.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "StoneSlab";
-  src: url("/fonts/StoneSlab.ttf") format("truetype");
+  src: url("/Stone_Slab.ttf") format("truetype");
 }
 @font-face {
   font-family: "GameTape";
-  src: url("/fonts/Game_Tape.ttf") format("truetype");
+  src: url("/Game_Tape.ttf") format("truetype");
 }
 
 .marquee {
@@ -20,7 +20,6 @@
   z-index: 0;
   margin-top: 100px;
 }
-
 
 .cloudLeft {
   padding-left: 20px;
@@ -114,7 +113,7 @@
   z-index: 999;
   /* transition: all 1s ease; */
 }
-.arrowLeft.visibleleft{
+.arrowLeft.visibleleft {
   opacity: 1;
   pointer-events: all;
   /* scale: 5; */
@@ -122,9 +121,7 @@
   pointer-events: all;
   top: 50%;
   /* transition: all 1s ease; */
-
 }
-
 
 .arrowRight {
   /* transition: opacity 0.5s ease; */
@@ -137,16 +134,14 @@
   z-index: 999;
   transition: all 1s ease-in-out;
   pointer-events: none;
-
 }
-.arrowRight.visibleright{
+.arrowRight.visibleright {
   opacity: 1;
   transition: all 1s ease-in-out;
   pointer-events: all;
   /* scale: 5; */
   top: 50%;
   /* transition: all 1s ease; */
-
 }
 .arrowLeft h3 {
   color: #ffebd3;
@@ -179,17 +174,16 @@
 }
 .btnMerch {
   position: absolute;
-  scale: 5;
+  scale: 4;
   right: 17%;
-  top: 65%;
+  top: 50%;
   z-index: 999;
   transition: all 0.3s ease;
 }
 
 .btnMerch:hover {
-    filter: drop-shadow(0 0 7px #FE3989);
+  filter: drop-shadow(0 0 7px #fe3989);
 }
-
 
 .merch-btn {
   display: flex;
@@ -246,39 +240,39 @@
 .mobile-btn {
   display: none;
 } */
-.merchBtn{
-    position: absolute;
-    bottom: 5%;
-    display: flex;
+.merchBtn {
+  position: absolute;
+  bottom: 5%;
+  display: flex;
 }
 .mobileMerch {
-    display: none;
-  }
-  .mobileBottom {
-    display: none;
-  }
-  .mobileBtn {
-    display: none;
-  }
+  display: none;
+}
+.mobileBottom {
+  display: none;
+}
+.mobileBtn {
+  display: none;
+}
 
 @media screen and (max-width: 1024px) {
-    .marquee1 {
-        position: absolute;
-        width: 100%;
-        z-index: 40;
-        margin-top: 80px;
-      }
-      .marquee2 {
-        position: absolute;
-        z-index: 9;
-        height: 20vh;
-        height: fit-content;
-        width: 100%;
-        left: 0;
-        margin-top: 35px;
-      }
+  .marquee1 {
+    position: absolute;
+    width: 100%;
+    z-index: 40;
+    margin-top: 80px;
+  }
+  .marquee2 {
+    position: absolute;
+    z-index: 9;
+    height: 20vh;
+    height: fit-content;
+    width: 100%;
+    left: 0;
+    margin-top: 35px;
+  }
   .box {
-    scale: 1  ;
+    scale: 1;
     height: 60%;
     position: absolute;
     justify-self: center;
@@ -335,9 +329,9 @@
   transition: all ease 0.3s;
 }
 .bot:hover {
-    /* border: 2px solid #fe3989; */
-    opacity: 90%;
-    filter: drop-shadow(0 10 10px #91023b);
+  /* border: 2px solid #fe3989; */
+  opacity: 90%;
+  filter: drop-shadow(0 10 10px #91023b);
   /* color: #ffebd3; */
 }
 
@@ -358,7 +352,7 @@
     display: none;
   }
   .leftBtns {
-    bottom:2%;
+    bottom: 2%;
   }
   .rightBtns {
     bottom: 2%;
@@ -380,12 +374,12 @@
     opacity: 0;
     transition: all 0.5s ease;
   }
-  .mobileMerch.visibleleft{
+  .mobileMerch.visibleleft {
     opacity: 1;
     /* top: 20%; */
     /* transition: all 1s ease; */
   }
-  .model2{
+  .model2 {
     pointer-events: none;
   }
   .mobileMerch h3 {
@@ -414,7 +408,7 @@
     opacity: 0;
     transition: all 0.5s ease;
   }
-  .mobileBottom.visibleright{
+  .mobileBottom.visibleright {
     opacity: 1;
   }
   .mobileBottom h3 {
@@ -451,7 +445,6 @@
     /* Add any common styles for cloud here */
   }
 
-  
   .marquee {
     position: absolute;
     height: 40vw;
@@ -461,8 +454,7 @@
     z-index: 0;
     margin-top: 100px;
   }
-  
-  
+
   .cloudLeft {
     padding-left: 0px;
   }
@@ -484,15 +476,13 @@
     left: 0;
     margin-top: 0px;
   }
-  .box{
+  .box {
     z-index: 2;
   }
-  
-
 }
 
 @media screen and (max-width: 540px) {
   .logo {
     scale: 1.8;
-  } 
+  }
 }

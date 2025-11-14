@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
+/* Register custom fonts (files are in /public) */
+@font-face {
+  font-family: "BrickPixel";
+  src: url("/Brick_Pixel.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "StoneSlab";
+  src: url("/Stone_Slab.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GameTape";
+  src: url("/Game_Tape.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

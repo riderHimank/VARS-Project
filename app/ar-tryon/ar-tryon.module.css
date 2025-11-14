@@ -10,7 +10,8 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  z-index: 1000;
+  z-index: 1001;
+  color: black;
   background: rgba(255, 255, 255, 0.9);
   border: none;
   padding: 12px 24px;
@@ -19,11 +20,13 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .backButton:hover {
   background: white;
   transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .arContainer {
@@ -70,7 +73,7 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 10px 15px;
   border-radius: 20px;
@@ -78,7 +81,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  z-index: 100;
+  z-index: 1001;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .statusDot {
@@ -95,10 +99,10 @@
 
 .cameraToggle {
   position: absolute;
-  top: 20px;
+  bottom: 20px;
   left: 20px;
-  z-index: 999;
-  background: rgba(0, 0, 0, 0.6);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.7);
   border: none;
   color: white;
   width: 48px;
@@ -108,12 +112,14 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.3s ease;
-  margin-left: 80px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .cameraToggle:hover {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .cameraToggle svg {
@@ -255,24 +261,34 @@
     left: 10px;
     padding: 10px 20px;
     font-size: 14px;
+    z-index: 1002;
   }
 
   .cameraToggle {
     top: 10px;
-    left: 70px;
+    left: 140px;
     width: 40px;
     height: 40px;
+    z-index: 1002;
+  }
+
+  .cameraToggle svg {
+    width: 20px;
+    height: 20px;
   }
 
   .statusIndicator {
     top: 10px;
     right: 10px;
     font-size: 12px;
+    padding: 8px 12px;
+    z-index: 1002;
   }
 
   .instructions {
     bottom: 20px;
     padding: 12px 20px;
+    font-size: 11px;
   }
 
   .instructionsTitle {
