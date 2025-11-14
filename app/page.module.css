@@ -73,12 +73,31 @@
 }
 .logo {
   position: absolute;
-  top: 18%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 15vmin;
+  width: 100%;
+  top: 10%;
   z-index: 999;
-  scale: 6.5;
+  /* scale: 6.5; */
+  text-shadow: 0 0 0px #fe3989, 0 0 10px #fe3989, 0 0 15px #fe3989;
   font-family: "BrickPixel";
   color: #fe3989;
-  text-shadow: 0 0 0px #fe3989, 0 0 20px #fe3989, 0 0 30px #fe3989;
+  /* animation: textShadow 2s infinite; */
+}
+
+@keyframes textShadow {
+  0% {
+    text-shadow: 0 0 0px #fe3989, 0 0 0px #fe3989, 0 0 0px #fe3989;
+  }
+  50% {
+    text-shadow: 0 0 0px #fe3989, 0 0 10px #fe3989, 0 0 15px #fe3989;
+  }
+  100% {
+    text-shadow: 0 0 0px #fe3989, 0 0 0px #fe3989, 0 0 0px #fe3989;
+  }
 }
 
 .model2 {
@@ -174,20 +193,21 @@
 }
 .btnMerch {
   position: absolute;
-  scale: 4;
-  right: 17%;
+  font-size: 10dvh;
+  right: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   top: 50%;
+  transform: translate(10%, -50%);
   z-index: 999;
-  transition: all 0.3s ease;
+  animation: textShadow 2s infinite;
+  cursor: pointer;
 }
-
-.btnMerch:hover {
-  filter: drop-shadow(0 0 7px #fe3989);
-}
-
 .merch-btn {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   position: absolute;
   bottom: 4%;
@@ -283,12 +303,12 @@
     /* transform: translateY(50%); */
     transform: translateX(-50%);
   }
-  .logo {
+  /* .logo {
     scale: 3.4;
     position: absolute;
     top: 20%;
-    /* padding-top: 100px; */
-  }
+    /* padding-top: 100px; 
+  } */
   .arrowLeft {
     scale: 4;
   }
@@ -312,10 +332,10 @@
     position: absolute;
     top: 0%;
   }
-  .btnMerch {
+  /* .btnMerch {
     scale: 3.5;
     padding-left: 10px;
-  }
+  } */
 
   .merchBtn {
     /* display: none; */
@@ -342,12 +362,12 @@
   .arrowRight {
     display: none;
   }
-  .logo {
+  /* .logo {
     scale: 3;
-  }
-  .btnMerch {
+  } */
+  /* .btnMerch {
     display: none;
-  }
+  } */
   .merchBtn {
     display: none;
   }
@@ -428,18 +448,20 @@
   .mobileBtn {
     display: block;
     scale: 4;
-    padding-right: 10px;
     position: absolute;
-    bottom: 3%;
+    right: 50%;
+    bottom: 5%;
+    transform: translate(50%, 0);
+    font-size: 5vmax;
   }
 }
 
 @media screen and (max-width: 540px) {
-  .logo {
+  /* .logo {
     top: 20%;
     transform: translateY(10%);
     scale: 2.4;
-  }
+  } */
   .cloud {
     scale: 0.6;
     /* Add any common styles for cloud here */
@@ -482,7 +504,7 @@
 }
 
 @media screen and (max-width: 540px) {
-  .logo {
+  /* .logo {
     scale: 1.8;
-  }
+  } */
 }

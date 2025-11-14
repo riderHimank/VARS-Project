@@ -9,17 +9,20 @@ import { Regular } from "../models3d/Regular";
 import { Hoodie } from "../models3d/Hoodie";
 import { Oversized } from "../models3d/Oversized";
 import styles from "./ar-tryon.module.css";
+import { is } from "@react-three/fiber/dist/declarations/src/core/utils";
 
 interface ShoulderPosition {
   x: number;
   y: number;
-  scale: number;
+  scaleX: number;
+  scaleY: number;
 }
 
 function ARTryOnContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const modelType = searchParams.get("model") || "regular";
+  const [isMobile, setIsMobile] = useState(true);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -35,17 +38,19 @@ function ARTryOnContent() {
   const [shoulderPos, setShoulderPos] = useState<ShoulderPosition>({
     x: 0,
     y: 0,
-    scale: 1,
+    scaleX: 1,
+    scaleY: 1,
   });
+
+  useEffect(() => {}, []);
 
   // Initialize MediaPipe
   useEffect(() => {
     let isComponentMounted = true;
-
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", handleResize);
     const initMediaPipe = async () => {
       try {
-        console.log("Initializing MediaPipe Pose...");
-
         const vision = await FilesetResolver.forVisionTasks(
           "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
         );
@@ -64,7 +69,6 @@ function ARTryOnContent() {
         });
 
         poseLandmarkerRef.current = poseLandmarker;
-        console.log("MediaPipe initialized successfully");
       } catch (err) {
         console.error("MediaPipe initialization error:", err);
         setError(
@@ -199,31 +203,48 @@ function ARTryOnContent() {
               const shoulderWidth = Math.abs(leftShoulder.x - rightShoulder.x);
               const torsoHeight = Math.abs(shoulderCenterY - hipCenterY);
 
-              // Scale adjustment based on model type
-              let scaleMultiplier = 3;
-              if (modelType === "hoodie") scaleMultiplier = 2.8;
-              if (modelType === "oversized") scaleMultiplier = 3.5;
+              // Convert to Three.js coordinates
+              let x = (torsoCenterX - 0.5) * 2;
+              let y = -(torsoCenterY - 0.5) * 2;
 
-              const widthScale = shoulderWidth * scaleMultiplier;
-              const heightScale = torsoHeight * 2.5;
-              const scale = Math.max(
-                0.5,
-                Math.min(2.5, (widthScale + heightScale) / 2)
+              // Scale adjustment based on model type
+              // Increased width multipliers and decreased height multipliers for better proportions
+              let widthMultiplier = isMobile ? 3.9 : 5;
+              let heightMultiplier = isMobile ? 1.3 : 1.7;
+
+              if (modelType === "regular") {
+                y += 0.1;
+              }
+              if (modelType === "hoodie") {
+                widthMultiplier = isMobile ? 4 : 4.6;
+                heightMultiplier = isMobile ? 1.3 : 1.9;
+                y += 0.4;
+              }
+              if (modelType === "oversized") {
+                widthMultiplier = isMobile ? 4.2 : 5;
+                heightMultiplier = isMobile ? 1.3 : 1.7;
+                y += 0.2;
+              }
+
+              // Calculate separate X and Y scales with proper bounds
+              const scaleX = Math.max(
+                0.3,
+                Math.min(1.5, shoulderWidth * widthMultiplier)
+              );
+              const scaleY = Math.max(
+                0.3,
+                Math.min(1.5, torsoHeight * heightMultiplier)
               );
 
-              // Convert to Three.js coordinates
-              const x = (torsoCenterX - 0.5) * 2;
-              const y = -(torsoCenterY - 0.5) * 2;
-
-              setShoulderPos({ x, y, scale });
+              setShoulderPos({ x, y, scaleX, scaleY });
 
               // Draw pose tracking visualization
-              drawPoseVisualization(
-                ctx,
-                landmarks,
-                canvas.width,
-                canvas.height
-              );
+              // drawPoseVisualization(
+              //   ctx,
+              //   landmarks,
+              //   canvas.width,
+              //   canvas.height
+              // );
             }
           } else {
             setPoseDetected(false);
@@ -304,14 +325,12 @@ function ARTryOnContent() {
       ctx.lineTo(rightHip.x * width, rightHip.y * height);
       ctx.stroke();
     };
-
+    handleResize();
     initMediaPipe();
     startCamera();
 
     // Cleanup - runs when component unmounts or dependencies change
     return () => {
-      console.log("Cleaning up AR try-on camera and pose detection...");
-
       // Mark component as unmounted
       isComponentMounted = false;
 
@@ -325,7 +344,6 @@ function ARTryOnContent() {
       if (streamRef.current) {
         streamRef.current.getTracks().forEach((track) => {
           track.stop();
-          console.log("Stopped AR camera track:", track.kind);
         });
         streamRef.current = null;
       }
@@ -342,6 +360,7 @@ function ARTryOnContent() {
       // Clear state
       setStream(null);
       setPoseDetected(false);
+      window.removeEventListener("resize", handleResize);
     };
   }, [facingMode, modelType]);
 
@@ -382,16 +401,8 @@ function ARTryOnContent() {
             <p className={styles.solutionsTitle}>💡 Solutions:</p>
             <ul>
               <li>
-                <strong>For iPhone/iOS:</strong> Access must use HTTPS
+                <strong>For Mobile Phones:</strong> Access must use HTTPS
                 (https://)
-              </li>
-              <li>
-                <strong>For Testing:</strong> Deploy to Vercel/Netlify which
-                provides HTTPS
-              </li>
-              <li>
-                <strong>For Development:</strong> Use ngrok or cloudflared for
-                HTTPS tunnel
               </li>
               <li>
                 <strong>Permissions:</strong> Check browser camera permissions
@@ -412,7 +423,7 @@ function ARTryOnContent() {
   return (
     <div className={styles.container}>
       <button className={styles.backButton} onClick={() => router.back()}>
-        X
+        ←
       </button>
 
       <div className={styles.arContainer}>
@@ -453,7 +464,11 @@ function ARTryOnContent() {
               <MerchModel
                 modelType={modelType}
                 position={[shoulderPos.x, shoulderPos.y, 0]}
-                scale={shoulderPos.scale}
+                scale={[
+                  shoulderPos.scaleX,
+                  shoulderPos.scaleY,
+                  shoulderPos.scaleX,
+                ]}
                 visible={poseDetected}
               />
             </Suspense>
@@ -474,7 +489,11 @@ function ARTryOnContent() {
               poseDetected ? styles.active : ""
             }`}
           ></div>
-          <span>
+          <span
+            style={{
+              fontFamily: "StoneSlab",
+            }}
+          >
             {poseDetected ? "Tracking Active" : "Searching for body..."}
           </span>
         </div>
@@ -502,21 +521,26 @@ function ARTryOnContent() {
 
         {/* Instructions */}
         <div className={styles.instructions}>
-          <p className={styles.instructionsTitle}>
-            📸 AR Try-On: {modelType.toUpperCase()}
+          <p
+            className={styles.instructionsTitle}
+            style={{
+              fontFamily: "GameTape",
+              fontSize: "20px",
+            }}
+          >
+            AR Try-On: {modelType.toUpperCase()}
           </p>
-          <p className={styles.instructionsText}>
+          <p
+            className={styles.instructionsText}
+            style={{
+              fontFamily: "StoneSlab",
+            }}
+          >
             Position yourself in front of the camera. The {modelType} will
-            automatically fit to your torso.
+            automatically fit.
             {poseDetected && (
               <span className={styles.detected}>✓ Body detected!</span>
             )}
-          </p>
-          <p className={styles.legendText}>
-            <span className={styles.green}>●</span> Shoulders &nbsp;
-            <span className={styles.cyan}>●</span> Hips &nbsp;
-            <span className={styles.yellow}>—</span> Torso &nbsp;
-            <span className={styles.magenta}>●</span> Center
           </p>
         </div>
       </div>
@@ -542,7 +566,7 @@ function MerchModel({
 }: {
   modelType: string;
   position: [number, number, number];
-  scale: number;
+  scale: number | [number, number, number];
   visible: boolean;
 }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -550,7 +574,12 @@ function MerchModel({
   useFrame(() => {
     if (groupRef.current && visible) {
       groupRef.current.position.set(...position);
-      groupRef.current.scale.setScalar(scale);
+      // Support both uniform scale (number) and separate scale (array)
+      if (typeof scale === "number") {
+        groupRef.current.scale.setScalar(scale);
+      } else {
+        groupRef.current.scale.set(scale[0], scale[1], scale[2]);
+      }
       groupRef.current.visible = true;
     } else if (groupRef.current) {
       groupRef.current.visible = false;

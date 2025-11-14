@@ -1,6 +1,6 @@
 "use client";
 import { OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useState, useEffect } from "react";
 import * as THREE from "three";
 import styles from "./page.module.css";
@@ -60,7 +60,6 @@ export default function Page() {
     setCurrent((current + 1) % 3);
     setLeft((left + 1) % 3);
     setRight((right + 1) % 3);
-    console.log("Current:", current, "Left:", left, "Right:", right);
     setTimeout(() => {
       setCurrentm((currentm + 1) % 3);
       handleExpandis();
@@ -72,22 +71,15 @@ export default function Page() {
     setCurrent((current + 2) % 3);
     setLeft((left + 2) % 3);
     setRight((right + 2) % 3);
-    console.log("Current:", current, "Left:", left, "Right:", right);
     setTimeout(() => {
       setCurrentm((currentm + 2) % 3);
       handleExpandis();
     }, 0);
-    // setCurrent((current + 2) % 3);
-    // setLeft((left + 2) % 3);
-    // setRight((right + 2) % 3);
-    // console.log("Current:", current, "Left:", left, "Right:", right);
   };
-  // Don't access window during render (prevents "window is not defined" on the server)
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
 
-    // Set initial value on mount
     handleResize();
 
     window.addEventListener("resize", handleResize);
@@ -136,7 +128,7 @@ export default function Page() {
       className={styles.maindiv}
       style={{
         width: "100%",
-        height: "120vh",
+        height: "120dvh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -204,7 +196,7 @@ export default function Page() {
           className={`${styles.model2} custom-canvas-class`}
           style={{
             touchAction: "none",
-            pointerEvents: isMobile ? "none" : "auto",
+            pointerEvents: isMobile ? "auto" : "auto",
           }}
         >
           <OrbitControls
@@ -216,9 +208,15 @@ export default function Page() {
           />
           <ambientLight />
 
-          {currentm == 0 && <Hoodie className="custom-hoodie-class" />}
-          {currentm == 1 && <Regular className="custom-regular-class" />}
-          {currentm == 2 && <Oversized className="custom-oversized-class" />}
+          {currentm == 0 && (
+            <Hoodie isRotating={true} className="custom-hoodie-class" />
+          )}
+          {currentm == 1 && (
+            <Regular isRotating={true} className="custom-regular-class" />
+          )}
+          {currentm == 2 && (
+            <Oversized isRotating={true} className="custom-oversized-class" />
+          )}
         </Canvas>
       </div>
 
