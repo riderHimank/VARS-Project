@@ -16,7 +16,7 @@ interface ShoulderPosition {
   scale: number;
 }
 
-export default function ARTryOnPage() {
+function ARTryOnContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const modelType = searchParams.get("model") || "regular";
@@ -521,6 +521,15 @@ export default function ARTryOnPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Wrapper component with Suspense boundary
+export default function ARTryOnPage() {
+  return (
+    <Suspense fallback={<div className={styles.container}>Loading...</div>}>
+      <ARTryOnContent />
+    </Suspense>
   );
 }
 
