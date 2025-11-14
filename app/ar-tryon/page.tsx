@@ -209,20 +209,20 @@ function ARTryOnContent() {
 
               // Scale adjustment based on model type
               // Increased width multipliers and decreased height multipliers for better proportions
-              let widthMultiplier = isMobile ? 1.5 : 5;
-              let heightMultiplier = isMobile ? 1.2 : 1.7;
+              let widthMultiplier = isMobile ? 1.4 : 5;
+              let heightMultiplier = isMobile ? 1.3 : 1.7;
 
               if (modelType === "regular") {
                 y += 0.1;
               }
               if (modelType === "hoodie") {
-                widthMultiplier = isMobile ? 2 : 4.6;
-                heightMultiplier = isMobile ? 1.4 : 1.9;
-                y += 0.4;
+                widthMultiplier = isMobile ? 1.9 : 4.6;
+                heightMultiplier = isMobile ? 1.5 : 1.9;
+                y += 0.2;
               }
               if (modelType === "oversized") {
-                widthMultiplier = isMobile ? 1.5 : 5;
-                heightMultiplier = isMobile ? 1.2 : 1.7;
+                widthMultiplier = isMobile ? 1.4 : 5;
+                heightMultiplier = isMobile ? 1.3 : 1.7;
                 y += 0.2;
               }
 
