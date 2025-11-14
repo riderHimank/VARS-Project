@@ -536,8 +536,8 @@ function ARTryOnContent() {
               fontFamily: "StoneSlab",
             }}
           >
-            Position yourself in front of the camera. The {modelType} will
-            automatically fit.
+            Position yourself in front of the camera at a distance of 5 meters.
+            The {modelType} will automatically fit.
             {poseDetected && (
               <span className={styles.detected}>✓ Body detected!</span>
             )}

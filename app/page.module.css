@@ -201,7 +201,7 @@
   text-align: center;
   top: 50%;
   transform: translate(10%, -50%);
-  z-index: 999;
+  z-index: 1110;
   animation: textShadow 2s infinite;
   cursor: pointer;
 }
